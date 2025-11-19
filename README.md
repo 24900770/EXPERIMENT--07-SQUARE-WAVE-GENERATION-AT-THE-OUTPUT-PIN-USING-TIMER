@@ -1,4 +1,4 @@
-# EXPERIMENT--07-SQUARE-WAVE-GENERATION-AT-THE-OUTPUT-PIN-USING-TIMER
+# EXPERIMENT- 07 SQUARE WAVE GENERATION AT THE OUTPUT PIN USING TIMER
 
 ### Aim:
 To generate a PWM wave at the timer pin output and  simuate it on  proteus using an virtual oscilloscope  
@@ -96,6 +96,7 @@ Step14. click on debug and simulate using simulation as shown below
   
 
 ## STM 32 CUBE PROGRAM :
+
 ```
 /* USER CODE BEGIN Header */
 /**
@@ -105,12 +106,13 @@ Step14. click on debug and simulate using simulation as shown below
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -130,7 +132,6 @@ Step14. click on debug and simulate using simulation as shown below
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -164,7 +165,6 @@ static void MX_TIM2_Init(void);
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -188,9 +188,6 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM2_Init();
-  HAL_TIM_Base_Start(&htim2);
-  HAL_TIM_PWM_Init(&htim2);
-  HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -219,7 +216,6 @@ void SystemClock_Config(void)
   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
-
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -231,7 +227,6 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -292,7 +287,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 600;
+  sConfigOC.Pulse = 500;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -313,16 +308,10 @@ static void MX_TIM2_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -359,44 +348,56 @@ void assert_failed(uint8_t *file, uint32_t line)
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
-#endif /* USE_FULL_ASSERT */
+#endif /* USE_FULL_ASSERT */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
 
 ```
-## Output screen shots of proteus  :
+
+
+## OUTPUT :
 <img width="1230" height="840" alt="image" src="https://github.com/user-attachments/assets/04f1c380-b804-468e-a078-b156baf3457a" />
+
+
 
 ## DUTY CYCLE AND FREQUENCY CALCULATION 
 FOR PULSE AT 500
-<img width="1034" height="507" alt="Screenshot 2025-10-24 131852" src="https://github.com/user-attachments/assets/041dc66d-7430-4631-a304-b03205ccab89" />
+![441193740-af0e010e-758f-4d26-a6ce-c9466182d350](https://github.com/user-attachments/assets/2ee94cbc-79d8-4d96-a336-d4b94cd19dfb)
+
+
 ```
-TON = 1.4 x 20 x 10^-6
-    = 0.000028
-TOFF= 0.000028
+TON = 3 x 10 x 10^-6
+    = 0.00003
+TOFF=0.00003
 TOTAL TIME = TON + TOFF
-           = 0.000028 + 0.000028
-           = 0.000056
+           = 0.00003+0.00003 
+           = 0.00006
 FREQUENCY = 1/(TOTAL TIME) 
-          = 1/0.000056
-          = 17857.143
+          =1/0.00006 
+          = 16 kHz
 DUTY CYCLE = TON /(TON+TOFF)
-           = 0.000028/0.000056
+           = 0.00003/0.00006
            = 0.5
       IN % =0.5*100 
            = 50 %
 ```
 
+
 FOR PULSE AT 700
-<img width="1033" height="509" alt="Screenshot 2025-10-24 131957" src="https://github.com/user-attachments/assets/404f0875-ea4b-4f2b-bc23-b32e8f0d48bf" />
+![441193979-3a401d6b-7849-421a-b1f7-ca489800fe11](https://github.com/user-attachments/assets/5e3fa348-50e6-4658-a06a-3daa89ec9be1)
 
 ```
-TON = 2.1 x 20 x 10^-6
-    = 0.000042
-TOFF = 0.000014
+TON = 4 x 10 x 10^-6
+    = 0.00004
+TOFF= 2 x 10 x 10^-6
+    = 0.00002
 TOTAL TIME = TON + TOFF
-           = 0.000042 + 0.000014
-           = 0.000056
+           = 0.00004+0.00002
+           = 0.00006
 FREQUENCY = 1/(TOTAL TIME)
-          = 
+          = 16 kHZ
 DUTY CYCLE = TON /(TON+TOFF)
            = 0.00004/0.00006
            = 0.7
@@ -404,8 +405,10 @@ DUTY CYCLE = TON /(TON+TOFF)
            = 70 %
 ```
 
+
 FOR PULSE AT 900
-<img width="1035" height="494" alt="Screenshot 2025-10-24 132058" src="https://github.com/user-attachments/assets/19dacb83-75e4-4b19-bd7d-6e42b9215ae0" />
+![441194179-aa29e670-19a7-4185-a1ea-ffbf7cd2c5a6](https://github.com/user-attachments/assets/ddcc1dca-1b88-4081-a930-06a4d2e77143)
+
 ```
 TON = 1 x 50 x 10^-6
     = 0.00005
@@ -415,13 +418,18 @@ TOTAL TIME = TON + TOFF
            = 0.00005 + 0.000005
            = 0.000055
 FREQUENCY = 1/(TOTAL TIME)
-          = 18181.82
+          = 18 kHz
 DUTY CYCLE = TON /(TON+TOFF)
            = 0.00005/0.000055
            = 0.9
       IN % =0.9*100 
            = 90 %
 ```
+
+
 ## Result :
 A PWM Signal is generated using the following frequency and various duty cycles are simulated 
+
+
+
 
